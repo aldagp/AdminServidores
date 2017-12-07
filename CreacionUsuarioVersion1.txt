@@ -1,0 +1,44 @@
+#!/bin/bash
+#
+#Debemos ser root, para crear dichos usuarios
+	if [ "`id -u`" != 0 ] ; then
+	echo -e "\n"
+	echo "Debes ser root para ejecutar el proceso"
+	exit 1
+	fi
+#
+	echo "Bienvenido"; whoami ;
+	echo "¿Cual es el nombre del usuario?:"
+	read nombre
+	echo "¿Cual es el directorio home? (por defecto /home/$nombre):"
+	read directorio
+	echo "¿Cual es el grupo del usuario?:"
+	read grupo
+	echo "¿Cual sera el shell a utilizar? (por defecto /bin/bash):"
+	read shell
+	echo "Datos ingresados correctamente"
+	sleep 1
+
+#Datos	
+	echo "Los datos que ingreso son:"
+	echo	"Nombre usuario:" $nombre
+	echo	"Directorio home:" $directorio
+	echo	"Grupo del usuario:" $grupo
+	echo	"Shell del usuario:" $shell
+	sleep 3
+#
+#Grupos creados
+	groupadd $grupo
+	echo "Grupo del usuario creado"
+#
+#Usuarios Creados
+	useradd -d $directorio -g $grupo -s $shell $nombre
+#
+#Contreseña para el usuario.
+	echo -e "\n"
+	echo "Escribe la contraseña para el usuario $nombre:"
+	passwd $nombre
+	
+	sleep 1
+	echo "Has, creado un usuario ¡Felicidades! "; whoami ;
+	sleep 1
